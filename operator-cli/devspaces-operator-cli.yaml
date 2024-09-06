@@ -1,0 +1,43 @@
+# Create a dedicated namespace for Dev Spaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: devspaces
+  name: devspaces
+---
+# Create an OperatorGroup resource for the devspaces namespace
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name:  devspaces-operator-group
+  namespace:  devspaces
+---
+# Create a subscription for the DevWorkSpace operator (DWO)
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: devworkspace-operator
+  namespace: devspaces
+spec:
+  channel: fast
+  installPlanApproval: Manual
+  name: devworkspace-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: devworkspace-operator.v0.29.0
+---
+# Create a subscription for the Dev Spaces Operator (DO)
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: devspaces
+  namespace: devspaces
+spec:
+  channel: stable
+  installPlanApproval: Manual
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: devspaces
+  startingCSV: devspacesoperator.v3.14.0
+---
