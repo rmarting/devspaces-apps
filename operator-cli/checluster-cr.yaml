@@ -2,7 +2,7 @@
 kind: CheCluster
 metadata:
   name: devspaces
-  namespace: devspaces
+  namespace: openshift-devspaces
 spec:
   components:
     cheServer:
