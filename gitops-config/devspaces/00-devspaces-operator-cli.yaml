@@ -1,0 +1,37 @@
+# Create a dedicated namespace for Dev Spaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    kubernetes.io/metadata.name: openshift-devspaces
+    argocd.argoproj.io/managed-by: openshift-gitops
+  name: openshift-devspaces
+---
+# Create an OperatorGroup resource for the devspaces namespace
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name:  devspaces-operator-group
+  namespace:  openshift-devspaces
+---
+# Create a subscription for the Dev Spaces Operator (DO)
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-devspaces
+  namespace: openshift-devspaces
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: devspaces
+---

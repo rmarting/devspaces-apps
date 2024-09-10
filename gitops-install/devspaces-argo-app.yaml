@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devspaces-config
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: openshift-devspaces
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: gitops-config/devspaces
+    repoURL: https://github.com/RedHatQuickCourses/devspaces-apps.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
