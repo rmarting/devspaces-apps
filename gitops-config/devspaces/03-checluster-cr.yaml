@@ -5,14 +5,12 @@ metadata:
   namespace: openshift-devspaces
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   components:
     cheServer:
       debug: false
       logLevel: INFO
-      clusterRoles:
-        - customrole-devspaces
     dashboard:
       logLevel: ERROR
     devWorkspace: {}
@@ -25,9 +23,6 @@ spec:
     pluginRegistry: {}
   containerRegistry: {}
   devEnvironments:
-    user:
-      clusterRoles:
-        - customrole-devspaces
     containerBuildConfiguration:
       openShiftSecurityContextConstraint: container-build
     defaultNamespace:
