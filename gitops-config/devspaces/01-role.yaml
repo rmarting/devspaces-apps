@@ -28,3 +28,9 @@ rules:
       - apps
     resources:
       - deployments
+  - verbs:
+      - '*'
+    apiGroups:
+      - org.eclipse.che
+    resources:
+      - checlusters
