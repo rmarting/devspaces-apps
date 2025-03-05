@@ -37,6 +37,8 @@ spec:
     startTimeoutSeconds: 300
     storage:
       pvcStrategy: per-user
+    workspacesPodAnnotations:
+      io.kubernetes.cri-o.Devices: /dev/fuse
   gitServices: {}
   networking:
     auth:
